@@ -13,7 +13,7 @@ namespace Immersive.Hub {
         void Update() {
             triggerPulled = Input.GetButton("Right Trigger");
 
-            if (Input.GetButton("Fire")) {
+            if (Input.GetButton("Jump")) {
                 SceneSwitchController.instance.TeleportTo(nextSceneName);
             }
         }

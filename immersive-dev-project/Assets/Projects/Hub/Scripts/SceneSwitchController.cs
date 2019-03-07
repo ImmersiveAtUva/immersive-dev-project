@@ -8,7 +8,7 @@ namespace Immersive.Hub {
 
         public static SceneSwitchController instance;
 
-        private string nextSceneName;
+        public string nextSceneName;
 
         void Awake() {
             if(instance != null) {
@@ -31,8 +31,9 @@ namespace Immersive.Hub {
         }
 
         public void SwitchScenes() {
-            nextSceneName = "";
             SceneManager.LoadScene(nextSceneName);
+            nextSceneName = "";
+            FadeController.instance.FadeIn();
         }
     }
 }

@@ -9,6 +9,7 @@ public class FadeControllerE : Editor {
 
     public override void OnInspectorGUI() {
         var fc = target as FadeController;
+        var root = PrefabUtility.GetNearestPrefabInstanceRoot(fc);
         serializedObject.Update();
 
         var serProp = serializedObject.GetIterator();
@@ -22,8 +23,10 @@ public class FadeControllerE : Editor {
 
                     if (EditorGUI.EndChangeCheck()) {
                         fc.speed = speed;
-                        PrefabUtility.UnpackPrefabInstance(PrefabUtility.GetNearestPrefabInstanceRoot(fc),
-                            PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+   
+                        if(root != null)
+                            PrefabUtility.UnpackPrefabInstance(root, PrefabUnpackMode.Completely, 
+                                InteractionMode.AutomatedAction);
                         fc.anim.SetFloat("Speed", speed);
                     }
                     break;
@@ -35,8 +38,10 @@ public class FadeControllerE : Editor {
                         fc.fadeColor = color;
                         if(fc.fadeImage != null) {
                             fc.fadeImage.color = color;
-                            PrefabUtility.UnpackPrefabInstance(PrefabUtility.GetNearestPrefabInstanceRoot(fc), 
-                                PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+
+                            if (root != null)
+                                PrefabUtility.UnpackPrefabInstance(root, PrefabUnpackMode.Completely, 
+                                InteractionMode.AutomatedAction);
                             EditorSceneManager.MarkSceneDirty(fc.gameObject.scene);
                         }
                     }

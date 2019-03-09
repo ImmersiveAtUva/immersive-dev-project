@@ -25,7 +25,7 @@ namespace Immersive.Hub {
 
         // Use this for initialization
         void Start() {
-            FadeController.instance.FadedOutEvent += SwitchScenes;
+            FadeController.instance.FadeOutCompletedEvent += SwitchScenes;
         }
         
         /// <summary>

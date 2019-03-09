@@ -19,7 +19,8 @@ public class FadeController : MonoBehaviour {
     public Image fadeImage;
     private bool automatic;
 
-    public FadeEvent FadedOutEvent, FadedInEvent;
+    public FadeEvent FadeOutCompletedEvent, FadeInCompletedEvent, 
+        FadeInStartedEvent, FadeOutStartedEvent;
 
     /// <summary>
     /// Whether the fade controller has completely faded out
@@ -55,6 +56,7 @@ public class FadeController : MonoBehaviour {
         faded = true;
         anim.SetFloat("Speed", this.speed = speed);
         anim.SetTrigger("Toggle");
+        FadeOutStartedEvent?.Invoke();
     }
 
     /// <summary>
@@ -72,6 +74,7 @@ public class FadeController : MonoBehaviour {
         faded = false;
         anim.SetFloat("Speed", speed);
         anim.SetTrigger("Toggle");
+        FadeInStartedEvent?.Invoke();
     }
 
     /// <summary>
@@ -79,7 +82,7 @@ public class FadeController : MonoBehaviour {
     /// Triggers FadeOut Event
     /// </summary>
     public void HandleFadeOut() {
-        FadedOutEvent?.Invoke();
+        FadeOutCompletedEvent?.Invoke();
         if (automatic) FadeIn();
     }
 
@@ -87,6 +90,6 @@ public class FadeController : MonoBehaviour {
     /// Triggered when animation has completely faded in
     /// </summary>
     public void HandleFadedIn() {
-        FadedInEvent?.Invoke();
+        FadeInCompletedEvent?.Invoke();
     }
 }

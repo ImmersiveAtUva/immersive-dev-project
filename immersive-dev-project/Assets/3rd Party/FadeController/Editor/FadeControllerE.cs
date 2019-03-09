@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 [CustomEditor(typeof(FadeController))]
 public class FadeControllerE : Editor {
@@ -21,6 +22,8 @@ public class FadeControllerE : Editor {
 
                     if (EditorGUI.EndChangeCheck()) {
                         fc.speed = speed;
+                        PrefabUtility.UnpackPrefabInstance(PrefabUtility.GetNearestPrefabInstanceRoot(fc),
+                            PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
                         fc.anim.SetFloat("Speed", speed);
                     }
                     break;
@@ -32,6 +35,9 @@ public class FadeControllerE : Editor {
                         fc.fadeColor = color;
                         if(fc.fadeImage != null) {
                             fc.fadeImage.color = color;
+                            PrefabUtility.UnpackPrefabInstance(PrefabUtility.GetNearestPrefabInstanceRoot(fc), 
+                                PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+                            EditorSceneManager.MarkSceneDirty(fc.gameObject.scene);
                         }
                     }
                     break;

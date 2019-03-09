@@ -17,6 +17,7 @@ public class FadeController : MonoBehaviour {
     public float speed = 1;
     public Color fadeColor = Color.black;
     public Image fadeImage;
+    private bool automatic;
 
     public FadeEvent FadedOutEvent, FadedInEvent;
 
@@ -32,6 +33,11 @@ public class FadeController : MonoBehaviour {
         }
 
         instance = this;
+
+        // Default layout:
+        //- FadeCanvas
+        // - FadeControlller <--
+        //  - Image
         DontDestroyOnLoad(transform.parent.gameObject);
     }
 
@@ -39,15 +45,32 @@ public class FadeController : MonoBehaviour {
         anim = GetComponent<Animator>();
     }
 
-    public void FadeOut() {
+    /// <summary>
+    /// Start the fade out animation. Default transition lasts 1/3 s
+    /// </summary>
+    /// <param name="auto">Whether or not to start fading in automatically</param>
+    public void FadeOut(float speed = 1f, bool auto = false) {
         if (faded) return;
+        automatic = faded;
         faded = true;
+        anim.SetFloat("Speed", this.speed = speed);
         anim.SetTrigger("Toggle");
     }
 
+    /// <summary>
+    /// Start the fade in animation. Default transition lasts 1/3 s
+    /// </summary>
     public void FadeIn() {
+        FadeIn(1f);
+    }
+
+    /// <summary>
+    /// Start the fade in animation with a speed
+    /// </summary>
+    public void FadeIn(float speed) {
         if (!faded) return;
         faded = false;
+        anim.SetFloat("Speed", speed);
         anim.SetTrigger("Toggle");
     }
 
@@ -57,6 +80,7 @@ public class FadeController : MonoBehaviour {
     /// </summary>
     public void HandleFadeOut() {
         FadedOutEvent?.Invoke();
+        if (automatic) FadeIn();
     }
 
     /// <summary>

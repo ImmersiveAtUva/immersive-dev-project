@@ -36,6 +36,7 @@ namespace Immersive.Hub.Sce {
                 }
             }
             
+
             serializedObject.ApplyModifiedProperties();
         }
 

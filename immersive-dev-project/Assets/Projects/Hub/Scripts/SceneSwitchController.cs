@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Immersive.Hub {
+    /// <summary>
+    /// Controls switching between scenes
+    /// </summary>
     public class SceneSwitchController : MonoBehaviour {
 
         public static SceneSwitchController instance;
@@ -25,7 +28,12 @@ namespace Immersive.Hub {
             FadeController.instance.FadedOutEvent += SwitchScenes;
         }
         
+        /// <summary>
+        /// Begin the transition of changing scenes
+        /// </summary>
+        /// <param name="nextScene"> the local location of the SceneAsset to load in</param>
         public void TeleportTo(string nextScene) {
+            // TODO: check if file exists or is a SceneAsset
             nextSceneName = nextScene;
             FadeController.instance.FadeOut();
         }

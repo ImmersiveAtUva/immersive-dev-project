@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class SceneSwitcher : MonoBehaviour {
 
     private bool triggerPulled = false;
+    //public Scene nextScene;
+    public string nextScene;
 
 	// Use this for initialization
 	void Start () {
@@ -19,13 +21,14 @@ public class SceneSwitcher : MonoBehaviour {
 
     private void OnTriggerStay(Collider collision)
     {
-        if (collision.gameObject.tag == "Portal")
+        if (collision.gameObject.tag == "Player")
         {
+            Handheld.Vibrate();
             print(collision.gameObject.name);
-            if (triggerPulled)
+            if (triggerPulled && nextScene != null)
             {
                 print("Trigger Pressed");
-                SceneManager.LoadScene("Recursive");
+                SceneManager.LoadScene(nextScene);
             }
         }
     }
